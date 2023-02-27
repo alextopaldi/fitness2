@@ -1,0 +1,83 @@
+$container: 1280px;
+$white:#FFFFFF;
+$black: #000000;
+$zeyada: 'Zeyada',
+cursive;
+$bebas:'Bebas Neue',
+cursive;
+body {
+    // font-family: $rubik;
+    color: $black;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin flex($jc, $ai) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+.wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: $container;
+    margin: 0 auto;
+    padding: 0 40px;
+    // outline: 1px solid red;
+}
+
+.navigation {
+    width: 100%;
+    background-color: rgb(23, 23, 182);
+    position: fixed;
+}
+
+.navigation-list {
+    @include flex(space-between, center);
+    position: relative;
+}
+
+.logo {
+    font-family: $zeyada;
+    font-size: 44px;
+    text-transform: uppercase;
+    position: absolute;
+    color: $white;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -40%);
+}
+
+.links {
+    width: 100%;
+    @include flex(flex-end, center);
+    font-family: $bebas;
+}
+
+.link {
+    margin-right: 30px;
+    &:last-child {
+        margin-right: 0;
+        font-size: 24px;
+    }
+    text-decoration: none;
+    color: $white;
+    border-top: 5px transparent solid;
+    padding: 35px 15px;
+    font-size:20px;
+    transition: 0.4s;
+    &:hover {
+        border-top: 5px $white solid;
+    }
+}
