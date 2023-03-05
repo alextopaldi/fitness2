@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { IProductInfoSearchResult, IProductSearchResult } from "../models/ProductSearchResult"
+import { useTranslate } from "./Translate"
 
 interface useFoodInfoSearchProps {
     product: IProductSearchResult,
@@ -12,6 +13,7 @@ export function useFoodInfoSearch({product, gramsValue} : useFoodInfoSearchProps
     const apiKey = 'ebc7bffae2434085b102d7c100a3a7c3'
     const [productInfo, setProductInfo] = useState<IProductInfoSearchResult>()
     const [loading, setLoading] = useState(false)
+    
 
     async function FetchProductInfo() {
         setLoading(true)

@@ -8,11 +8,12 @@ export function Navbar() {
         <nav className="navigation">
             <div className="container">
                 <div className="navigation-list">
-                    <div className="logo">Your fitness</div>
+                    <Link to='/' className="logo">Your fitness</Link>
                     <span className="links">
+                        <Link className="link" to='/'>Тренировки</Link>
                         <Link className="link" to='/'>Калькулятор</Link>
-                        <Link className="link" to='/'>Дневной отчет</Link>
-                        <Link className="link" to='/'>
+                        <Link className="link" to='/foodsearch'>Дневной отчет</Link>
+                        <Link className="link" to='/login'>
                             <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                         </Link>
                     </span>
