@@ -20,6 +20,7 @@ export function Registration() {
     function submitHandler(event : React.FormEvent) {
         event.preventDefault()
         registration()
+        console.log(userData)
     }
 
     return(

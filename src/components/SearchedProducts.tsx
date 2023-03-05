@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { useAppDispatch } from "../hooks/Redux";
 import { UserProductSlice } from "../redux/reducers/UserProductSlice";
+import axios from "axios";
  
 interface SearchedProductsProps {
     product : IProductSearchResult,
@@ -45,13 +46,29 @@ export function SearchedProducts({product, eating} : SearchedProductsProps) {
     const dispatch = useAppDispatch()
     const {addProduct} = UserProductSlice.actions
 
-    function SaveProduct() {
+    async function SaveProduct() {
+        const product1 = {
+            id: uniqid(),
+            name: product.name,
+            calories: Number(CaloriesPerValue()),
+            eating : eating
+        }
         dispatch(addProduct( {
             id: uniqid(),
             name: product.name,
             calories: Number(CaloriesPerValue()),
             eating : eating
         }))
+        const token = localStorage.getItem('token');
+        try {
+            const response = await axios.post('http://26.250.164.255:5000/addmeal', product1, {
+                headers : {
+                    'Authorization': `${token}`
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 

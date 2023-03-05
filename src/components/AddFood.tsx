@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 import { useAppDispatch } from "../hooks/Redux"
 import { IUserProduct } from "../models/UserProduct"
@@ -19,9 +20,21 @@ export function AddFood({eating} : AddFoodProps) {
         eating: eating
     })
 
-    function SaveProduct(event : React.FormEvent) {
+    async function SaveProduct(event : React.FormEvent) {
         event.preventDefault()
         dispatch(addProduct(product))
+        const token = localStorage.getItem('token');
+        console.log(token)
+        try {
+            const response = await axios.post('http://26.250.164.255:5000/addmeal', product, {
+                headers : {
+                    'Authorization': `${token}`
+                }
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (

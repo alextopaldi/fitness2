@@ -15,6 +15,12 @@ export const UserProductSlice = createSlice({
     reducers : {
         addProduct(state, action : PayloadAction<IUserProduct>) {
             state.products.push(action.payload)
+        },
+        deleteProduct(state, action : PayloadAction<string>) {
+            state.products.filter(item => item.id != action.payload)
+        },
+        fetchProduct(state, action : PayloadAction<IUserProduct[]>) {
+            state.products = action.payload
         }
     }
 })

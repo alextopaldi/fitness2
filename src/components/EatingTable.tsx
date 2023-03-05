@@ -4,10 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FoodSearch } from "./FoodSearch";
 import { Modal } from "./Modal";
 import { CSSTransition } from 'react-transition-group';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddFood } from "./AddFood";
-import { useAppSelector } from "../hooks/Redux";
+import { useAppDispatch, useAppSelector } from "../hooks/Redux";
 import { AddedProduct } from "./AddedProduct";
+import axios from "axios";
+import { IUserProduct } from "../models/UserProduct";
+import { UserProductSlice } from "../redux/reducers/UserProductSlice";
 
 export function EatingTable() {
 
@@ -16,6 +19,9 @@ export function EatingTable() {
     const [eating, setEating] = useState('')
 
     const {products} = useAppSelector(state => state.UserProductSlice)
+
+    const dispatch = useAppDispatch()
+    const {addProduct, fetchProduct} = UserProductSlice.actions
 
     function AddProductOpener(eating : string) {
         setEating(eating)
@@ -26,6 +32,26 @@ export function EatingTable() {
         setEating(eating)
         setSearchVision(true)
     }
+
+    async function fetchProducts() {
+        const token = localStorage.getItem('token')
+        try {
+            const response = await axios.get('http://26.250.164.255:5000/getmeal', {
+            headers: {
+                'Authorization': `${token}`
+            }
+            })
+            console.log(response)
+            // response.data.products.map((product : IUserProduct) => dispatch(addProduct(product)))
+            dispatch(fetchProduct(response.data.products))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    useEffect( () => {
+        fetchProducts()
+    }, [])
 
 
     return(
