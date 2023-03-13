@@ -67,6 +67,9 @@ export function SearchedProducts({product, eating} : SearchedProductsProps) {
                 }
             })
         } catch (error) {
+            if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+                window.location.href = '/login';
+              }
             console.log(error)
         }
     }

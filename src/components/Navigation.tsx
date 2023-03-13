@@ -10,8 +10,8 @@ export function Navbar() {
                 <div className="navigation-list">
                     <Link to='/' className="logo">Your fitness</Link>
                     <span className="links">
-                        <Link className="link" to='/'>Тренировки</Link>
-                        <Link className="link" to='/'>Калькулятор</Link>
+                        <Link className="link" to='/training'>Тренировки</Link>
+                        <Link className="link" to='/calculator'>Калькулятор</Link>
                         <Link className="link" to='/foodsearch'>Дневной отчет</Link>
                         <Link className="link" to='/login'>
                             <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>

@@ -4,6 +4,7 @@ $black: #000000;
 $gray: #7c7c7c;
 $gray-active: #e7e7e7;
 $green: rgb(99, 165, 99);
+$white-bg: rgba(252, 252, 252, 1);
 $transition: 0.4s;
 $shadow: rgba(99, 99, 99, 0.6) 0px 2px 8px 0px;
 $zeyada: 'Zeyada',
@@ -15,6 +16,7 @@ sans-serif;
 body {
     // font-family: $rubik;
     color: $black;
+    background-color: $white-bg;
 }
 
 *,
@@ -290,7 +292,7 @@ body {
     padding: 40px 60px;
     font-family: $bebas;
     margin: 0 auto;
-    margin-top: 20vh
+    margin-top: 20vh;
 }
 
 .eating-results {
@@ -313,6 +315,8 @@ body {
     &:last-child {
         margin-bottom: 0;
     }
+    box-shadow: $shadow;
+    transition: height 0.4s ease-in-out;
 }
 
 .added-product {
@@ -373,6 +377,11 @@ body {
     bottom: 5px;
     right: 50%;
     transform: translate(50%);
+    transition: 0.4s;
+}
+
+.chevron-active {
+    transform: translate(50%) rotate(180deg) scaleX(-1);
 }
 
 .modal-background-main {
@@ -387,8 +396,9 @@ body {
 
 .modal {
     width: 25%;
-    height: 50%;
-    background-color: $white;
+    height: auto;
+    max-height: 50%;
+    background-color: $white-bg;
     position: absolute;
     top: 50%;
     right: 50%;
@@ -474,4 +484,254 @@ body {
         }
         font-family: $nato-sans;
     }
+}
+
+.calc {
+    @include flex(center, center);
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 20vh;
+    width: 400px;
+    font-family: $nato-sans;
+    .inp-text {
+        width: 400px;
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        box-shadow: $shadow;
+        transition: $transition;
+        &:focus {
+            background-color: $gray-active;
+        }
+        font-family: $nato-sans;
+        &::placeholder {
+            color: $gray;
+        }
+        margin-bottom: 20px;
+    }
+    select {
+        width: 400px;
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        box-shadow: $shadow;
+        transition: $transition;
+        &:focus {
+            background-color: $gray-active;
+        }
+        font-family: $nato-sans;
+        -moz-appearance:none;
+        /* Firefox */
+        -webkit-appearance:none;
+        /* Safari and Chrome */
+        appearance:none;
+        margin-bottom: 20px;
+    }
+    button {
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        height: 40px;
+        background-color: $white;
+        box-shadow: $shadow;
+        min-width: 50%;
+        cursor: pointer;
+        transition: $transition;
+        font-family: $nato-sans;
+        margin-top: 20px;
+        &:hover {
+            background-color: $gray-active;
+        }
+    }
+    p {
+        margin-bottom: 5px;
+        margin-left: 20px;
+    }
+}
+
+.calc__sex {
+    @include flex(space-between, center);
+    width: 50%;
+}
+
+.form-check-input {
+    margin-right: 5px;
+}
+
+.main_calc_results {
+    padding: 10px 20px;
+    width: 400px;
+    box-shadow: $shadow;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin: 40px auto;
+    font-family: $nato-sans;
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+}
+
+.main_calc_results-active {
+    opacity: 1;
+}
+
+.profile {
+    width: 700px;
+    background-color: $white-bg;
+    padding: 50px;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: $shadow;
+    color: $black;
+    font-family: $nato-sans;
+    font-weight: bold;
+}
+
+.profile__intro {
+    width: 100%;
+    h6 {
+        text-transform: capitalize;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        margin-top: 10px;
+    }
+    p {
+        text-align: center;
+        margin-top: 10px;
+    }
+}
+
+.avatar-border {
+    margin: 0 auto;
+    background-color: black;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: $shadow;
+    border: 1px solid $gray;
+    overflow: hidden;
+    @include flex(center, center);
+    img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+.profile__items-item {
+    width: 100%;
+    box-shadow: $shadow;
+    height: 60px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    @include flex(space-between, center);
+    margin: 40px 0;
+    transition: 0.4s;
+    background-color: $white;
+    cursor: pointer;
+    &:hover {
+        background-color: $gray-active;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.profile__item-icon {
+    width: 25px;
+    height: 25px;
+    color: $gray;
+}
+
+.profile__items-item-preview {
+    @include flex(center, center);
+    p {
+        margin-left: 20px;
+    }
+}
+
+.profile-stats {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    background-color: $gray;
+    width: 40px;
+    height: 40px;
+    @include flex(center, center);
+    border-radius: 50%;
+    cursor: pointer;
+    &__icon {
+        height: 20px;
+        width: 20px;
+        color: $white;
+    }
+}
+
+.user-stats {
+    font-family: $nato-sans;
+    font-size: 16px;
+    width: 100%;
+    button {
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        height: 40px;
+        background-color: $white;
+        box-shadow: $shadow;
+        min-width: 30%;
+        cursor: pointer;
+        transition: $transition;
+        font-family: $nato-sans;
+        margin: 0 auto;
+        display: block;
+        margin-top: 20px;
+        &:hover {
+            background-color: $gray-active;
+        }
+    }
+}
+
+.user-stats__item-preview {
+    margin-left: 10px;
+}
+
+.user-stats__values {
+    @include flex(space-between, center);
+    width: 100%;
+    background-color: $white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    box-shadow: $shadow;
+    margin: 10px 0;
+    input {
+        border: none;
+        outline: none;
+        font-family: $nato-sans;
+        font-size: 16px;
+    }
+}
+
+.user-stats__icon {
+    width: 15px;
+    height: 15px;
+    color: $gray;
+    cursor: pointer;
+}
+
+.user-stats__icon-check {
+    width: 20px;
+    height: 20px;
+    color: $green;
+    cursor: pointer;
 }

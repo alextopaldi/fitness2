@@ -24,15 +24,16 @@ export function AddFood({eating} : AddFoodProps) {
         event.preventDefault()
         dispatch(addProduct(product))
         const token = localStorage.getItem('token');
-        console.log(token)
         try {
             const response = await axios.post('http://26.250.164.255:5000/addmeal', product, {
                 headers : {
                     'Authorization': `${token}`
                 }
             })
-            console.log(response)
         } catch (error) {
+            if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+                window.location.href = '/login';
+              }
             console.log(error)
         }
     }

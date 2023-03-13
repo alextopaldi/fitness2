@@ -1,24 +1,41 @@
-import {  } from "@fortawesome/free-regular-svg-icons";
-import { faUtensils, faPlus, faSearch, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faUtensils, faPlus, faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FoodSearch } from "./FoodSearch";
 import { Modal } from "./Modal";
 import { CSSTransition } from 'react-transition-group';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddFood } from "./AddFood";
 import { useAppDispatch, useAppSelector } from "../hooks/Redux";
 import { AddedProduct } from "./AddedProduct";
-import axios from "axios";
-import { IUserProduct } from "../models/UserProduct";
 import { UserProductSlice } from "../redux/reducers/UserProductSlice";
+import { useFetchProducts } from "../hooks/FetchProducts";
 
 export function EatingTable() {
 
     const [searchVision, setSearchVision] = useState(false)
     const [addFoodVision, setAddFoodVision] = useState(false)
     const [eating, setEating] = useState('')
+    const [productVision, setProductVision] = useState({
+        breakfast : false,
+        lanch : false, 
+        dinner : false,
+        snack : false
+    })
+    const maxCalories = 3000
 
     const {products} = useAppSelector(state => state.UserProductSlice)
+
+    function caloriesSum(eating : string) {
+        let sum = 0
+        if (eating) {
+            products.filter(item => item.eating == eating).map(product => sum += product.calories)
+            return sum
+        }
+        else {
+            products.map(product => sum += product.calories)
+            return sum
+        }
+    }
 
     const dispatch = useAppDispatch()
     const {addProduct, fetchProduct} = UserProductSlice.actions
@@ -33,26 +50,31 @@ export function EatingTable() {
         setSearchVision(true)
     }
 
-    async function fetchProducts() {
-        const token = localStorage.getItem('token')
-        try {
-            const response = await axios.get('http://26.250.164.255:5000/getmeal', {
-            headers: {
-                'Authorization': `${token}`
-            }
-            })
-            console.log(response)
-            // response.data.products.map((product : IUserProduct) => dispatch(addProduct(product)))
-            dispatch(fetchProduct(response.data.products))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    
+    const {fetchProducts} = useFetchProducts()
+
     useEffect( () => {
         fetchProducts()
     }, [])
 
+    const chevronStyle = {
+        breakfast : productVision.breakfast ? 'eating-icon chevron chevron-active' : 'eating-icon chevron',
+        lanch : productVision.lanch ? 'eating-icon chevron chevron-active' : 'eating-icon chevron',
+        dinner : productVision.dinner ? 'eating-icon chevron chevron-active' : 'eating-icon chevron',
+        snack : productVision.snack ? 'eating-icon chevron chevron-active' : 'eating-icon chevron',
+    }
+
+    // const parentRef = useRef<HTMLDivElement>(null);
+    // const childRef = useRef<HTMLDivElement>(null);
+    // const [parentHeight, setParentHeight] = useState<string | null>(null);
+    // const [childheight, SetChildheight] = useState<string | null>(null);
+
+    // useEffect(() => {
+    //     if (productVision && parentRef.current) {
+    //       setParentHeight(`${parentRef.current.offsetHeight}px`);
+    //     } else {
+    //       setParentHeight(null);
+    //     }
+    //   }, [productVision]);
 
     return(
         <>
@@ -63,7 +85,7 @@ export function EatingTable() {
                     <p>РСК</p>
                 </div>
                 <div className="eating-results__item">
-                    <p>1337</p>
+                    <p>{caloriesSum('')}</p>
                     <p>Калорий</p>
                 </div>
             </div>
@@ -74,14 +96,14 @@ export function EatingTable() {
                 </div>
                 <div className="string-results">
                     <div className="string-results__item">
-                        <p>1337</p>
+                        <p>{caloriesSum('breakfast')}</p>
                         <p>Калорий</p>
                     </div>
                     <FontAwesomeIcon onClick={() => AddProductOpener('breakfast')} className="eating-icon plus-icon" icon={faPlus}></FontAwesomeIcon>
                     <FontAwesomeIcon onClick={() => SearchProductOpener('breakfast')} className="eating-icon search-icon" icon={faSearch}></FontAwesomeIcon>
                 </div>
-                {products.filter(item => item.eating == 'breakfast').map(product => <AddedProduct key={product.id} product={product}/> )}
-                <FontAwesomeIcon className="eating-icon chevron" icon={faChevronDown}></FontAwesomeIcon>
+                {productVision.breakfast && products.filter(item => item.eating == 'breakfast').map(product => <AddedProduct key={product.id} product={product}/> )}
+                <FontAwesomeIcon onClick={() => setProductVision(prev => ({...prev, breakfast : !prev.breakfast}))} className={chevronStyle.breakfast} icon={faChevronDown}></FontAwesomeIcon>
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
@@ -90,14 +112,14 @@ export function EatingTable() {
                 </div>
                 <div className="string-results">
                     <div className="string-results__item">
-                        <p>1337</p>
+                        <p>{caloriesSum('lanch')}</p>
                         <p>Калорий</p>
                     </div>
                     <FontAwesomeIcon onClick={() => AddProductOpener('lanch')} className="eating-icon plus-icon" icon={faPlus}></FontAwesomeIcon>
                     <FontAwesomeIcon onClick={() => SearchProductOpener('lanch')} className="eating-icon search-icon" icon={faSearch}></FontAwesomeIcon>
                 </div>
-                {products.filter(item => item.eating == 'lanch').map(product => <AddedProduct key={product.id} product={product}/> )}
-                <FontAwesomeIcon className="eating-icon chevron" icon={faChevronDown}></FontAwesomeIcon>
+                {productVision.lanch && products.filter(item => item.eating == 'lanch').map(product => <AddedProduct key={product.id} product={product}/> )}
+                <FontAwesomeIcon onClick={() => setProductVision(prev => ({...prev, lanch : !prev.lanch}))} className={chevronStyle.lanch} icon={faChevronDown}></FontAwesomeIcon>
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
@@ -106,14 +128,14 @@ export function EatingTable() {
                 </div>
                 <div className="string-results">
                     <div className="string-results__item">
-                        <p>1337</p>
+                        <p>{caloriesSum('dinner')}</p>
                         <p>Калорий</p>
                     </div>
                     <FontAwesomeIcon onClick={() => AddProductOpener('dinner')} className="eating-icon plus-icon" icon={faPlus}></FontAwesomeIcon>
                     <FontAwesomeIcon onClick={() => SearchProductOpener('dinner')} className="eating-icon search-icon" icon={faSearch}></FontAwesomeIcon>
                 </div>
-                {products.filter(item => item.eating == 'dinner').map(product => <AddedProduct key={product.id} product={product}/> )}
-                <FontAwesomeIcon className="eating-icon chevron" icon={faChevronDown}></FontAwesomeIcon>
+                {productVision.dinner && products.filter(item => item.eating == 'dinner').map(product => <AddedProduct key={product.id} product={product}/> )}
+                <FontAwesomeIcon onClick={() => setProductVision(prev => ({...prev, dinner : !prev.dinner}))} className={chevronStyle.dinner} icon={faChevronDown}></FontAwesomeIcon>
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
@@ -122,14 +144,14 @@ export function EatingTable() {
                 </div>
                 <div className="string-results">
                     <div className="string-results__item">
-                        <p>1337</p>
+                        <p>{caloriesSum('snack')}</p>
                         <p>Калорий</p>
                     </div>
                     <FontAwesomeIcon onClick={() => AddProductOpener('snack')} className="eating-icon plus-icon" icon={faPlus}></FontAwesomeIcon>
                     <FontAwesomeIcon onClick={() => SearchProductOpener('snack')} className="eating-icon search-icon" icon={faSearch}></FontAwesomeIcon>
                 </div>
-                {products.filter(item => item.eating == 'snack').map(product => <AddedProduct key={product.id} product={product}/> )}
-                <FontAwesomeIcon className="eating-icon chevron" icon={faChevronDown}></FontAwesomeIcon>
+                {productVision.snack && products.filter(item => item.eating == 'snack').map(product => <AddedProduct key={product.id} product={product}/>)}
+                <FontAwesomeIcon onClick={() => setProductVision(prev => ({...prev, snack : !prev.snack}))} className={chevronStyle.snack} icon={faChevronDown}></FontAwesomeIcon>
             </div>
             <CSSTransition in={searchVision} timeout={300} classNames = "alert" unmountOnExit>
                 <Modal onClose={() => setSearchVision(false)}>

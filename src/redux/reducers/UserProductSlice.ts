@@ -17,7 +17,7 @@ export const UserProductSlice = createSlice({
             state.products.push(action.payload)
         },
         deleteProduct(state, action : PayloadAction<string>) {
-            state.products.filter(item => item.id != action.payload)
+            state.products = state.products.filter(item => item.id != action.payload)
         },
         fetchProduct(state, action : PayloadAction<IUserProduct[]>) {
             state.products = action.payload
