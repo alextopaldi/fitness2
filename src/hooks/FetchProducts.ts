@@ -1,13 +1,16 @@
 import axios from "axios"
 import { IUserProduct } from "../models/UserProduct"
 import { UserProductSlice } from "../redux/reducers/UserProductSlice"
+
 import { useAppDispatch } from "./Redux"
+import { useNavigate } from "react-router-dom"
 
 export function useFetchProducts() {
 
 
     const dispatch = useAppDispatch()
     const {fetchProduct} = UserProductSlice.actions
+    const navigate = useNavigate()
 
     
     async function fetchProducts() {
@@ -22,9 +25,8 @@ export function useFetchProducts() {
             dispatch(fetchProduct(response.data.products))
         } catch (error) {
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-                window.location.href = '/login';
+                navigate('/login')
               }
-            console.log(error)
         }
     }
 

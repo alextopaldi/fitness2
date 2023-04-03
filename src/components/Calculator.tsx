@@ -64,8 +64,6 @@ export function Calculator() {
         <p>Формула Харриса-Бенедикта: <b>{res.harris}</b></p>
         {saved? <p>Сохранено!</p> : <button onClick={fetchCalculate}>Сохранить</button>}
     </div>
-    <button onClick={fetchUserInfo}>fetch</button>
-    <button onClick={getUserInfo}>user</button>
     </>
     )
 }

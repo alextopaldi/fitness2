@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useAppDispatch } from "./Redux";
 import { UserInfoSlice } from "../redux/reducers/UserInfoSlice";
+import { useNavigate } from "react-router-dom";
 
 export function useFetchUserInfo() {
 
     const dispatch = useAppDispatch()
     const {addInfo} = UserInfoSlice.actions
+    const navigate = useNavigate()
 
     async function fetchUserInfo() {
         const token = localStorage.getItem('token')
@@ -18,9 +20,8 @@ export function useFetchUserInfo() {
             dispatch(addInfo(response.data))
         } catch (error) {
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-                window.location.href = '/login';
+                navigate('/login')
               }
-            console.log(error)
         }
     }
 

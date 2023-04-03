@@ -1,9 +1,9 @@
 import { Profile } from "../components/Profile";
 
-export function TrainingPage() {
+export function ProfilePage() {
     return(
         <>
-        {/* <Profile/> */}
+        <Profile/>
         </>
     )
 }

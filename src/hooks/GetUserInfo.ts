@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { IUserInfo } from "../models/UserInfo";
+import { useNavigate } from "react-router-dom";
 
 export function useGetUserInfo() {
 
@@ -9,6 +10,7 @@ export function useGetUserInfo() {
         surname: '',
         email: ''
     })
+    const navigate = useNavigate()
 
     async function getUserInfo() {
         const token = localStorage.getItem('token')
@@ -21,9 +23,8 @@ export function useGetUserInfo() {
             setUserInfo(response.data)
         } catch (error) {
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-                window.location.href = '/login';
+                navigate('/login')
               }
-            console.log(error)
         }
     }
 

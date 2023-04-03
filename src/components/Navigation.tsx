@@ -13,7 +13,7 @@ export function Navbar() {
                         <Link className="link" to='/training'>Тренировки</Link>
                         <Link className="link" to='/calculator'>Калькулятор</Link>
                         <Link className="link" to='/foodsearch'>Дневной отчет</Link>
-                        <Link className="link" to='/login'>
+                        <Link className="link" to='/profile'>
                             <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                         </Link>
                     </span>
