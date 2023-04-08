@@ -13,6 +13,7 @@ import axios from 'axios';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Login } from './components/Login';
 import { ProfilePage } from './pages/Profile';
+import { ExercisePage } from './pages/Exercise';
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
         <Route path='/calculator' element={<CalculatorPage/>}></Route>
         <Route path='/training' element={<TrainingPage/>}></Route>
         <Route path='/profile' element={<ProfilePage/>}></Route>
+        <Route path='/training/:id' element={<ExercisePage/>}></Route>
         {/* <Route
           path="/profule"
           element={

@@ -17,6 +17,7 @@ body {
     // font-family: $rubik;
     color: $black;
     background-color: $white-bg;
+    overflow-y: scroll;
 }
 
 *,
@@ -390,8 +391,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
     z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
 }
 
 .modal {
@@ -490,7 +492,7 @@ body {
     @include flex(center, center);
     flex-direction: column;
     margin: 0 auto;
-    margin-top: 20vh;
+    margin-top: 15vh;
     width: 400px;
     font-family: $nato-sans;
     .inp-text {
@@ -843,4 +845,190 @@ body {
     height: 100%;
     border-radius: 50%;
     position: absolute;
+}
+
+.small-exersice {
+    font-family: $nato-sans;
+    padding: 20px 40px;
+    border-radius: 20px;
+    box-shadow: $shadow;
+    img {
+        width: 300px;
+        height: 235px;
+    }
+    width: min-content;
+    height: 350px;
+    @include flex(space-between, space-between);
+    flex-direction: column;
+    text-align: center;
+    margin: 0 5px 30px 0;
+    &__name {
+        font-size: 14px;
+    }
+    &__group {
+        font-size: 18px;
+        color: $gray;
+    }
+    cursor: pointer;
+    transition: 0.4s;
+    &:hover {
+        background-color: $gray-active;
+    }
+}
+
+.small-exersices {
+    margin-top: 40px;
+    @include flex(space-between, center)
+}
+
+.search-bar {
+    margin-top: 15vh;
+    width: 100%;
+    @include flex(space-between, center);
+    select {
+        width: 100%;
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px;
+        box-shadow: $shadow;
+        transition: $transition;
+        &:hover {
+            background-color: $gray-active;
+        }
+        font-family: $nato-sans;
+        -moz-appearance:none;
+        /* Firefox */
+        -webkit-appearance:none;
+        /* Safari and Chrome */
+        appearance:none;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+
+.search-bar__inp {
+    width: 80%;
+    @include flex(space-between, center);
+    border-radius: 20px;
+    box-shadow: $shadow;
+    input {
+        width: calc(100% - 100px);
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 20px 0 0 20px;
+        transition: $transition;
+        &:focus {
+            background-color: $gray-active;
+        }
+        font-family: $nato-sans;
+    }
+    button {
+        width: 100px;
+        outline: none;
+        border: none;
+        height: 40px;
+        padding: 0 20px;
+        border-radius: 0 20px 20px 0;
+        height: 40px;
+        background-color: $white;
+        cursor: pointer;
+        transition: $transition;
+        &:hover {
+            background-color: $gray-active;
+        }
+        font-family: $nato-sans;
+        @include flex(space-between, center)
+    }
+}
+
+.search-bar__sel {
+    position: relative;
+    width: calc(20% - 40px);
+    p {
+        position: absolute;
+        top: -25px;
+    }
+    @include flex(center, center)
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    color: $black;
+    font-size: 22px;
+    transform: translate(50%, -50%);
+    text-align: center;
+    font-family: $bebas;
+}
+
+.loader-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // background: rgba(0, 0, 0, 0.2);
+    z-index: 100000;
+    backdrop-filter: blur(4px);
+}
+
+.circle {
+    width: 70px;
+    height: 100px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.exercise-large {
+    margin-top: 15vh;
+    @include flex(flex-start, flex-start);
+    font-family: $nato-sans;
+    flex-wrap: nowrap;
+}
+
+.exercise-large__img {
+    width: 50%;
+    img {
+        width: 100%;
+    }
+    box-shadow: $shadow;
+}
+
+.exercise-large__text {
+    width: 50%;
+    padding: 10px 40px;
+    p {
+        color: $gray;
+        margin: 10px 0;
+    }
+    .exercise-large__name {
+        color: $black;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 30px;
+    }
+    textarea {
+        margin-top: 30px;
+        width: 100%;
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        font-family: $nato-sans;
+        resize: none;
+        height: 200px;
+        box-shadow: $shadow;
+    }
 }

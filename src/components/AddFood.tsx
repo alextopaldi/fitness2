@@ -5,10 +5,11 @@ import { IUserProduct } from "../models/UserProduct"
 import { UserProductSlice } from "../redux/reducers/UserProductSlice"
 
 interface AddFoodProps {
-    eating : string
+    eating : string,
+    onClose : () => void
 }
 
-export function AddFood({eating} : AddFoodProps) {
+export function AddFood({eating, onClose} : AddFoodProps) {
 
     var uniqid = require('uniqid'); 
     const dispatch = useAppDispatch()
@@ -30,6 +31,7 @@ export function AddFood({eating} : AddFoodProps) {
                     'Authorization': `${token}`
                 }
             })
+            onClose()
         } catch (error) {
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
                 window.location.href = '/login';

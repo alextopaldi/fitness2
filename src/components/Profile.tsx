@@ -7,11 +7,12 @@ import { UserStats } from "./UserStats";
 import { CSSTransition } from 'react-transition-group';
 import { useLogout } from "../hooks/Logout";
 import { useDeleteUser } from "../hooks/DeleteUser";
+import { Loader } from "./Loader";
 
 export function Profile() {
 
     const avatar = require('../media/fitnessava.png')
-    const {getUserInfo, userInfo} = useGetUserInfo()
+    const {getUserInfo, userInfo, loader} = useGetUserInfo()
     const [modalHeartVision, setModalHeartVision] = useState(false)
     const [modalLogoutVision, setModalLogoutVision] = useState(false)
     const [modalDeleteVision, setModalDeleteVision] = useState(false)
@@ -25,6 +26,7 @@ export function Profile() {
 
     return(
         <>
+        {loader && <Loader/>}
         <div className="profile">
             <div onClick={() => setModalHeartVision(true)} className="profile-stats">
                 <FontAwesomeIcon className="profile-stats__icon" icon={faHeart}/>

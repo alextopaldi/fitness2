@@ -4,6 +4,7 @@ import { UserProductSlice } from "../redux/reducers/UserProductSlice"
 
 import { useAppDispatch } from "./Redux"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 export function useFetchProducts() {
 
@@ -11,9 +12,11 @@ export function useFetchProducts() {
     const dispatch = useAppDispatch()
     const {fetchProduct} = UserProductSlice.actions
     const navigate = useNavigate()
+    const [loader, setLoader] = useState(false)
 
     
     async function fetchProducts() {
+        setLoader(true)
         const token = localStorage.getItem('token')
         const currentDate = new Date().toISOString().slice(0, 10);
         try {
@@ -23,12 +26,14 @@ export function useFetchProducts() {
             }
             })
             dispatch(fetchProduct(response.data.products))
+            setLoader(false)
         } catch (error) {
+            setLoader(false)
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
                 navigate('/login')
               }
         }
     }
 
-    return {fetchProducts}
+    return {fetchProducts, loader}
 }

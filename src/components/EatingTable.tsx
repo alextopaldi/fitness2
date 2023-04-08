@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "../hooks/Redux";
 import { AddedProduct } from "./AddedProduct";
 import { UserProductSlice } from "../redux/reducers/UserProductSlice";
 import { useFetchProducts } from "../hooks/FetchProducts";
+import { Loader } from "./Loader";
+import { useFetchUserInfo } from "../hooks/FetchUserInfo";
 
 export function EatingTable() {
 
@@ -21,10 +23,12 @@ export function EatingTable() {
         dinner : false,
         snack : false
     })
-    const maxCalories = 3000
 
     const {products} = useAppSelector(state => state.UserProductSlice)
+    const {info} = useAppSelector(state => state.UserInfoSlice)
 
+    const maxCalories = info.calcResults.harris
+    
     function caloriesSum(eating : string) {
         let sum = 0
         if (eating) {
@@ -35,6 +39,10 @@ export function EatingTable() {
             products.map(product => sum += product.calories)
             return sum
         }
+    }
+
+    function rskPercent() {
+        return caloriesSum('')/maxCalories*100
     }
 
     const dispatch = useAppDispatch()
@@ -50,10 +58,12 @@ export function EatingTable() {
         setSearchVision(true)
     }
 
-    const {fetchProducts} = useFetchProducts()
+    const {fetchProducts, loader} = useFetchProducts()
+    const {fetchUserInfo} = useFetchUserInfo()
 
     useEffect( () => {
         fetchProducts()
+        fetchUserInfo()
     }, [])
 
     const chevronStyle = {
@@ -63,25 +73,13 @@ export function EatingTable() {
         snack : productVision.snack ? 'eating-icon chevron chevron-active' : 'eating-icon chevron',
     }
 
-    // const parentRef = useRef<HTMLDivElement>(null);
-    // const childRef = useRef<HTMLDivElement>(null);
-    // const [parentHeight, setParentHeight] = useState<string | null>(null);
-    // const [childheight, SetChildheight] = useState<string | null>(null);
-
-    // useEffect(() => {
-    //     if (productVision && parentRef.current) {
-    //       setParentHeight(`${parentRef.current.offsetHeight}px`);
-    //     } else {
-    //       setParentHeight(null);
-    //     }
-    //   }, [productVision]);
-
     return(
         <>
+        {loader && <Loader/>}
         <div className="eating-table">
             <div className="eating-results">
                 <div className="eating-results__item">
-                    <p>8%</p>
+                    <p>{Math.round(rskPercent())}%</p>
                     <p>РСК</p>
                 </div>
                 <div className="eating-results__item">
@@ -160,7 +158,7 @@ export function EatingTable() {
             </CSSTransition>
             <CSSTransition in={addFoodVision} timeout={300} classNames = "alert" unmountOnExit>
                 <Modal onClose={() => setAddFoodVision(false)}>
-                    <AddFood eating={eating}/>
+                    <AddFood onClose={() => setAddFoodVision(false)} eating={eating}/>
                 </Modal>
             </CSSTransition>
         </div>
