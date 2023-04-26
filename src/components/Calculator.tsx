@@ -10,6 +10,7 @@ export function Calculator() {
 
     return(
     <>
+    <div className="container">
     <form action="" className='calc' onSubmit={SubmitHandler}>
         <div className="calc__sex">
             <label htmlFor="sexMale" className='form-check-label inline-block'>
@@ -36,7 +37,7 @@ export function Calculator() {
             <input required className='inp-text' type="text" id='weight' value={calcValues?.weight} onChange={event => setCalcValues(prev =>  ({ ...prev, weight: Number(event.target.value)}))} />
         </label>
         <label htmlFor="fat">
-            <p>Процент жира:</p>
+            <p>Желанный вес:</p>
             <input className='inp-text' type="text" id='fat' value={calcValues?.fat} onChange={event => setCalcValues(prev =>  ({ ...prev, fat: Number(event.target.value)}))} />
         </label>
         <label htmlFor="activity">
@@ -63,6 +64,7 @@ export function Calculator() {
         <p>Формула Миффлина-Сан Жеора: <b>{res.miffin}</b></p>
         <p>Формула Харриса-Бенедикта: <b>{res.harris}</b></p>
         {saved? <p>Сохранено!</p> : <button onClick={fetchCalculate}>Сохранить</button>}
+    </div>
     </div>
     </>
     )

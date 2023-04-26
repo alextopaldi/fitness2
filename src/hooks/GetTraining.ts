@@ -19,18 +19,14 @@ export function useGetTraining() {
         setLoading(true)
         const token = localStorage.getItem('token')
         try {
-            const response = await axios.get('http://26.250.164.255:5000/exercises?muscle_group='+group+'&name='+name, {
-            headers: {
-                'Authorization': `${token}`
-            }
-            })
+            const response = await axios.get('http://26.250.164.255:5000/exercises?muscle_group='+group+'&name='+name)
             dispatch(addExercises(response.data))
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-                navigate('/login')
-              }
+            // if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+            //     navigate('/login')
+            //   }
         }
     }
 

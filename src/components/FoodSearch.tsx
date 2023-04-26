@@ -5,10 +5,11 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface FoodSearchProps {
-    eating : string
+    eating : string,
+    onClose : () => void
 }
 
-export function FoodSearch({eating} : FoodSearchProps) {
+export function FoodSearch({eating, onClose} : FoodSearchProps) {
 
     const [searchValue, setSearchValue] = useState('')
     const {ProductSearch, products, loading} = useFoodSearch({searchValue: searchValue})
@@ -24,7 +25,7 @@ export function FoodSearch({eating} : FoodSearchProps) {
                 <FontAwesomeIcon className="search-line__icon" icon={faSearch} onClick={ProductSearch}></FontAwesomeIcon>
             </div>
             {loading && <p>Loading...</p>}
-            {products && products.map(product => <SearchedProducts eating={eating} key={product.id} product={product}/>)}
+            {products && products.map(product => <SearchedProducts onClose={onClose} eating={eating} key={product.id} product={product}/>)}
         </div>
         </>
     )

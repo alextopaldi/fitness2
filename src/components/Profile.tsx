@@ -8,6 +8,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useLogout } from "../hooks/Logout";
 import { useDeleteUser } from "../hooks/DeleteUser";
 import { Loader } from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 export function Profile() {
 
@@ -24,11 +25,13 @@ export function Profile() {
         getUserInfo()
     }, [])
 
+    const navigate = useNavigate()
+
     return(
         <>
         {loader && <Loader/>}
         <div className="profile">
-            <div onClick={() => setModalHeartVision(true)} className="profile-stats">
+            <div onClick={() => navigate('/calculator')} className="profile-stats">
                 <FontAwesomeIcon className="profile-stats__icon" icon={faHeart}/>
             </div>
             <div className="logout">
@@ -56,21 +59,21 @@ export function Profile() {
                 <p>{userInfo.email}</p>
             </div>
             <div className="profile__items">
-                <div className="profile__items-item">
+                <div onClick={() => navigate('/profile/weight')} className="profile__items-item">
                     <div className="profile__items-item-preview">
                         <FontAwesomeIcon className="profile__item-icon" icon={faWeightScale}/>
                         <p>Мой вес</p>
                     </div>
                     <FontAwesomeIcon className="profile__item-icon" icon={faChevronRight}/>
                 </div>
-                <div className="profile__items-item">
+                <div onClick={() => navigate('/profile/food')} className="profile__items-item">
                     <div className="profile__items-item-preview">
                         <FontAwesomeIcon className="profile__item-icon" icon={faBurger}/>
                         <p>Моя еда</p>
                     </div>
                     <FontAwesomeIcon className="profile__item-icon" icon={faChevronRight}/>
                 </div>
-                <div className="profile__items-item">
+                <div onClick={() => navigate('/profile/training')} className="profile__items-item">
                     <div className="profile__items-item-preview">
                         <FontAwesomeIcon className="profile__item-icon" icon={faDumbbell}/>
                         <p>Мои тренировки</p>
@@ -79,11 +82,11 @@ export function Profile() {
                 </div>
             </div>
         </div>
-        <CSSTransition in={modalHeartVision} timeout={300} classNames = "alert" unmountOnExit>
+        {/* <CSSTransition in={modalHeartVision} timeout={300} classNames = "alert" unmountOnExit>
             <Modal onClose={() => setModalHeartVision(false)}>
                 <UserStats/>
             </Modal>
-        </CSSTransition>
+        </CSSTransition> */}
         <CSSTransition in={modalLogoutVision} timeout={300} classNames = "alert" unmountOnExit>
             <Modal onClose={() => setModalLogoutVision(false)}>
                 <div className="logout-menu">

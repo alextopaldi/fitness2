@@ -26,7 +26,7 @@ const initialState: UserProductState = {
 }
 
 export const UserInfoSlice = createSlice({
-    name: 'products',
+    name: 'userInfo',
     initialState,
     reducers : {
         addInfo(state, action : PayloadAction<IUserInfoFetch>) {

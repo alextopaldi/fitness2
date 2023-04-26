@@ -11,10 +11,11 @@ import axios from "axios";
  
 interface SearchedProductsProps {
     product : IProductSearchResult,
-    eating : string
+    eating : string,
+    onClose : () => void
 }
 
-export function SearchedProducts({product, eating} : SearchedProductsProps) {
+export function SearchedProducts({product, eating, onClose} : SearchedProductsProps) {
 
     const [grams, setGrams] = useState(100)
     const [infoVision, setInfoVision] = useState(false)
@@ -66,6 +67,7 @@ export function SearchedProducts({product, eating} : SearchedProductsProps) {
                     'Authorization': `${token}`
                 }
             })
+            onClose()
         } catch (error) {
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
                 window.location.href = '/login';

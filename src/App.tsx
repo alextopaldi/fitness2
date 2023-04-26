@@ -14,34 +14,13 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { Login } from './components/Login';
 import { ProfilePage } from './pages/Profile';
 import { ExercisePage } from './pages/Exercise';
+import { UserFoodPage } from './pages/UserFood';
+import { TrainingsPage } from './pages/Trainings';
+import { TrainingLargePage } from './pages/TrainingLarge';
+import { UserTrainingsPage } from './pages/UserTrainings';
+import { UserWeightPage } from './pages/UserWeight';
 
 function App() {
-
-  // const [auth, setAuth] = useState(false)
-
-  // async function checkTokenValidity() {
-  //     console.log('go')
-  //     const token = localStorage.getItem('token')
-  //     try {
-  //         const response = await axios.get('http://26.250.164.255:5000/check-token', {
-  //         headers: {
-  //             'Authorization': `${token}`
-  //         }
-  //         })
-  //         if (response.status === 200) {
-  //           setAuth(true)
-  //         }
-  //         console.log(response)
-  //     } catch (error) {
-          
-  //         console.log(error)
-  //     }
-  // }
-
-  // useEffect(() => {
-  //   checkTokenValidity()
-    
-  // },[])
 
   return (
     <div className="App">
@@ -54,14 +33,12 @@ function App() {
         <Route path='/training' element={<TrainingPage/>}></Route>
         <Route path='/profile' element={<ProfilePage/>}></Route>
         <Route path='/training/:id' element={<ExercisePage/>}></Route>
-        {/* <Route
-          path="/profule"
-          element={
-            <PrivateRoute auth={auth}>
-              <ProfilePage/>
-            </PrivateRoute>
-          }
-        /> */}
+        <Route path='/profile/food' element={<UserFoodPage/>}></Route>
+        <Route path='/profile/training' element={<UserTrainingsPage/>}></Route>
+        <Route path='/profile/training/:id' element={<TrainingLargePage route='/profile/training'/>}></Route>
+        <Route path='/profile/weight' element={<UserWeightPage/>}></Route>
+        <Route path='/trainings' element={<TrainingsPage/>}></Route>
+        <Route path='/trainings/:id' element={<TrainingLargePage route='/trainings'/>}></Route>
       </Routes>
     </div>
   );

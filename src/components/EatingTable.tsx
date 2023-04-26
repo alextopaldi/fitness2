@@ -61,9 +61,13 @@ export function EatingTable() {
     const {fetchProducts, loader} = useFetchProducts()
     const {fetchUserInfo} = useFetchUserInfo()
 
+    async function fetchEatingTable() {
+        await fetchProducts()
+        await fetchUserInfo()
+    }
+
     useEffect( () => {
-        fetchProducts()
-        fetchUserInfo()
+        fetchEatingTable()
     }, [])
 
     const chevronStyle = {
@@ -89,7 +93,7 @@ export function EatingTable() {
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
-                    <FontAwesomeIcon className="eating-icon" icon={faUtensils}></FontAwesomeIcon>
+                    <FontAwesomeIcon className="eating-icon instr-icon" icon={faUtensils}></FontAwesomeIcon>
                     <h6>Завтрак</h6>
                 </div>
                 <div className="string-results">
@@ -105,7 +109,7 @@ export function EatingTable() {
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
-                    <FontAwesomeIcon className="eating-icon" icon={faUtensils}></FontAwesomeIcon>
+                    <FontAwesomeIcon className="eating-icon instr-icon" icon={faUtensils}></FontAwesomeIcon>
                     <h6>Обед</h6>
                 </div>
                 <div className="string-results">
@@ -121,7 +125,7 @@ export function EatingTable() {
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
-                    <FontAwesomeIcon className="eating-icon" icon={faUtensils}></FontAwesomeIcon>
+                    <FontAwesomeIcon className="eating-icon instr-icon" icon={faUtensils}></FontAwesomeIcon>
                     <h6>Ужин</h6>
                 </div>
                 <div className="string-results">
@@ -137,7 +141,7 @@ export function EatingTable() {
             </div>
             <div className="eating-table__string">
                 <div className="string-preview">
-                    <FontAwesomeIcon className="eating-icon" icon={faUtensils}></FontAwesomeIcon>
+                    <FontAwesomeIcon className="eating-icon instr-icon" icon={faUtensils}></FontAwesomeIcon>
                     <h6>Перекус</h6>
                 </div>
                 <div className="string-results">
@@ -153,7 +157,7 @@ export function EatingTable() {
             </div>
             <CSSTransition in={searchVision} timeout={300} classNames = "alert" unmountOnExit>
                 <Modal onClose={() => setSearchVision(false)}>
-                    <FoodSearch eating={eating}/>
+                    <FoodSearch onClose={() => setSearchVision(false)} eating={eating}/>
                 </Modal>
             </CSSTransition>
             <CSSTransition in={addFoodVision} timeout={300} classNames = "alert" unmountOnExit>

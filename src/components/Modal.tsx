@@ -3,14 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ModalProps {
     children: React.ReactNode,
-    onClose : () => void
+    onClose : () => void,
+    modalClass? : boolean
 }
 
-export function Modal( {children, onClose} : ModalProps ) {
+export function Modal( {children, onClose, modalClass} : ModalProps ) {
     return(
         <>
         <div className="modal-background-main">
-            <div className="modal">
+            <div className={modalClass? 'modal exercise-modal' : 'modal'}>
                 <FontAwesomeIcon onClick={onClose} className="modal__icon" icon={faX}></FontAwesomeIcon>
                 {children}
             </div>

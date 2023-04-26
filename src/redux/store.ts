@@ -2,9 +2,10 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import UserInfoSlice from "./reducers/UserInfoSlice";
 import UserProductSlice from "./reducers/UserProductSlice"
 import ExercisesSlice from "./reducers/ExercisesSlice"
+import TrainingsSlice from "./reducers/TrainingsSlice";
 
 const rootReduser = combineReducers({
-    UserProductSlice, UserInfoSlice, ExercisesSlice
+    UserProductSlice, UserInfoSlice, ExercisesSlice, TrainingsSlice
 })
 
 export const setupStore = () => {
